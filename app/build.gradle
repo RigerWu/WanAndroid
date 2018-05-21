@@ -22,6 +22,16 @@ android {
         }
     }
 
+    flavorDimensions "code"
+    productFlavors {
+        dev {
+            versionNameSuffix "-dev"
+            applicationIdSuffix ".dev"
+            resConfigs "xxhdpi"
+            dimension "code"
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -68,6 +78,7 @@ dependencies {
     implementation rootProject.ext.dependencies["fragmentation"]
     implementation rootProject.ext.dependencies["fragmentation-swipeback"]
     implementation rootProject.ext.dependencies["crashreport"]
+    implementation rootProject.ext.dependencies["utilcode"]
     //canary
     debugImplementation rootProject.ext.dependencies["leakcanary-android"]
     releaseImplementation rootProject.ext.dependencies["leakcanary-android-no-op"]
