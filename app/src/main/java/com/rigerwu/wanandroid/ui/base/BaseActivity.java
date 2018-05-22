@@ -29,7 +29,13 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
         performDataBinding();
+        initDataAndEvent();
     }
+
+    /**
+     * for other init work
+     */
+    protected abstract void initDataAndEvent();
 
     /**
      * Override for set binding variable

@@ -45,6 +45,12 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
      */
     public abstract V getViewModel();
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mViewModel = getViewModel();
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -54,9 +60,20 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
     }
 
     @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mViewDataBinding.setVariable(getBindingVariable(), mViewModel);
+        mViewDataBinding.executePendingBindings();
+    }
+
+    @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
         initData();
+    }
+
+    public T getViewDataBinding() {
+        return mViewDataBinding;
     }
 
     /**
