@@ -5,7 +5,7 @@ import android.app.Application;
 
 import com.blankj.utilcode.util.Utils;
 import com.rigerwu.wanandroid.BuildConfig;
-import com.rigerwu.wanandroid.di.AppInjector;
+import com.rigerwu.wanandroid.di.component.DaggerAppComponent;
 
 import javax.inject.Inject;
 
@@ -46,7 +46,10 @@ public class WanAndroidApp extends Application implements HasActivityInjector {
         Utils.init(this);
 
         // di
-        AppInjector.init(this);
+        DaggerAppComponent.builder()
+                .application(this)
+                .build()
+                .inject(this);
 
         // logger
 

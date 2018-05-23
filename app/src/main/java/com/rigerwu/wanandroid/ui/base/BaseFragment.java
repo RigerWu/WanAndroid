@@ -10,15 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.rigerwu.wanandroid.di.Injectable;
-
+import dagger.android.support.AndroidSupportInjection;
 import me.yokeyword.fragmentation.SupportFragment;
 
 /**
  * Created by RigerWu on 2018/5/21.
  */
 public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseViewModel>
-        extends SupportFragment implements Injectable {
+        extends SupportFragment {
 
     private View mRootView;
     private T mViewDataBinding;
@@ -45,10 +44,17 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
      */
     public abstract V getViewModel();
 
+    /**
+     * init data and event
+     */
+    public abstract void initDataAndEvent();
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+        performDependencyInjection();
         super.onCreate(savedInstanceState);
         mViewModel = getViewModel();
+        setHasOptionsMenu(false);
     }
 
     @Nullable
@@ -69,15 +75,16 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
-        initData();
+        initDataAndEvent();
+    }
+
+
+    private void performDependencyInjection() {
+        AndroidSupportInjection.inject(this);
     }
 
     public T getViewDataBinding() {
         return mViewDataBinding;
     }
 
-    /**
-     * 初始化数据
-     */
-    public abstract void initData();
 }

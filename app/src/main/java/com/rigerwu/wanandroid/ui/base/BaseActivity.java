@@ -9,16 +9,16 @@ import android.support.annotation.Nullable;
 
 import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.NetworkUtils;
-import com.rigerwu.wanandroid.di.Injectable;
 import com.rigerwu.wanandroid.utils.CommonUtils;
 
+import dagger.android.AndroidInjection;
 import me.yokeyword.fragmentation.SupportActivity;
 
 /**
  * Created by RigerWu on 2018/5/21.
  */
 public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseViewModel>
-        extends SupportActivity implements Injectable {
+        extends SupportActivity {
 
     private ProgressDialog mProgressDialog;
     private T mViewDataBinding;
@@ -26,6 +26,7 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        performDependencyInjection();
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
         performDataBinding();
@@ -79,6 +80,11 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
             mProgressDialog.cancel();
         }
     }
+
+    protected void performDependencyInjection() {
+        AndroidInjection.inject(this);
+    }
+
 
     private void performDataBinding() {
         mViewDataBinding = DataBindingUtil.setContentView(this, getLayoutId());

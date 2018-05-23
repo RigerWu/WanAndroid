@@ -6,9 +6,17 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.rigerwu.wanandroid.Data.AppDataManager;
 import com.rigerwu.wanandroid.Data.DataManager;
+import com.rigerwu.wanandroid.Data.db.AppDbHelper;
+import com.rigerwu.wanandroid.Data.db.DbHelper;
+import com.rigerwu.wanandroid.Data.http.AppHttpHelper;
+import com.rigerwu.wanandroid.Data.http.HttpHelper;
 import com.rigerwu.wanandroid.Data.http.api.WanAndroidApi;
 import com.rigerwu.wanandroid.Data.http.client.RetrofitClient;
+import com.rigerwu.wanandroid.Data.prefs.AppPreferencesHelper;
+import com.rigerwu.wanandroid.Data.prefs.PreferencesHelper;
 import com.rigerwu.wanandroid.app.AppConstants;
+import com.rigerwu.wanandroid.utils.rx.AppSchedulerProvider;
+import com.rigerwu.wanandroid.utils.rx.SchedulerProvider;
 
 import javax.inject.Singleton;
 
@@ -36,6 +44,25 @@ public class AppModule {
 
     @Provides
     @Singleton
+    HttpHelper provideHttpHelper(AppHttpHelper appHttpHelper) {
+        return appHttpHelper;
+    }
+
+    @Provides
+    @Singleton
+    DbHelper provideDbHelper(AppDbHelper dbHelper) {
+        // TODO: 2018/5/23 init room when needed
+        return dbHelper;
+    }
+
+    @Provides
+    @Singleton
+    PreferencesHelper providePreferencesHelper(AppPreferencesHelper preferencesHelper) {
+        return preferencesHelper;
+    }
+
+    @Provides
+    @Singleton
     WanAndroidApi provideWanAndroidApi(Retrofit retrofit) {
         return retrofit.create(WanAndroidApi.class);
     }
@@ -52,6 +79,10 @@ public class AppModule {
         return new Gson();
     }
 
+    @Provides
+    SchedulerProvider provideSchedulerProvider() {
+        return new AppSchedulerProvider();
+    }
 
 
 }

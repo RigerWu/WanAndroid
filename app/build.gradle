@@ -50,7 +50,7 @@ dependencies {
     implementation rootProject.ext.dependencies["cardview-v7"]
     //aac
     implementation rootProject.ext.dependencies["room"]
-    implementation rootProject.ext.dependencies["room-compiler"]
+    annotationProcessor rootProject.ext.dependencies["room-compiler"]
     implementation rootProject.ext.dependencies["room-rxjava2"]
     implementation rootProject.ext.dependencies["lifecycle-common-java8"]
     //ui

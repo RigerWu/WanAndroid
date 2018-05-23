@@ -1,5 +1,6 @@
 package com.rigerwu.wanandroid.ui.splash;
 
+import com.rigerwu.wanandroid.BR;
 import com.rigerwu.wanandroid.R;
 import com.rigerwu.wanandroid.databinding.ActivitySplashBinding;
 import com.rigerwu.wanandroid.ui.base.BaseActivity;
