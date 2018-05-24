@@ -56,6 +56,7 @@ dependencies {
     //ui
     implementation rootProject.ext.dependencies["constraint-layout"]
     implementation rootProject.ext.dependencies["BaseRecyclerViewAdapterHelper"]
+    implementation rootProject.ext.dependencies["lottie"]
     //rx
     implementation rootProject.ext.dependencies["rxjava"]
     implementation rootProject.ext.dependencies["rxandroid"]

@@ -5,7 +5,5 @@ package com.rigerwu.wanandroid.ui.splash;
  */
 public interface SplashNavigator {
 
-    void openLoginActivity();
-
     void openMainActivity();
 }
