@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.blankj.utilcode.util.LogUtils;
+
 import dagger.android.support.AndroidSupportInjection;
 import me.yokeyword.fragmentation.SupportFragment;
 
@@ -70,12 +72,14 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
         super.onViewCreated(view, savedInstanceState);
         mViewDataBinding.setVariable(getBindingVariable(), mViewModel);
         mViewDataBinding.executePendingBindings();
+        LogUtils.i("BaseFragment.onViewCreated->:");
     }
 
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
         initDataAndEvent();
+        LogUtils.i("BaseFragment.onLazyInitView->:");
     }
 
 
@@ -84,7 +88,6 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
     }
 
     public T getViewDataBinding() {
-
         return mViewDataBinding;
     }
 

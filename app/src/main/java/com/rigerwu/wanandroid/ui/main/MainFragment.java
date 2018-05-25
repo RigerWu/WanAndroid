@@ -1,11 +1,13 @@
 package com.rigerwu.wanandroid.ui.main;
 
 import android.os.Bundle;
+import android.support.design.widget.BottomNavigationView;
 
 import com.rigerwu.wanandroid.BR;
 import com.rigerwu.wanandroid.R;
 import com.rigerwu.wanandroid.databinding.FragmentMainBinding;
 import com.rigerwu.wanandroid.ui.base.BaseFragment;
+import com.rigerwu.wanandroid.utils.BottomNavigationViewHelper;
 
 import javax.inject.Inject;
 
@@ -16,6 +18,9 @@ public class MainFragment extends BaseFragment<FragmentMainBinding, MainFragment
 
     @Inject
     MainFragmentViewModel mViewModel;
+
+    private FragmentMainBinding mBinding;
+    private BottomNavigationView mBottomNavigationView;
 
     public static MainFragment newInstance() {
         Bundle args = new Bundle();
@@ -41,6 +46,8 @@ public class MainFragment extends BaseFragment<FragmentMainBinding, MainFragment
 
     @Override
     public void initDataAndEvent() {
-
+        mBinding = getViewDataBinding();
+        mBottomNavigationView = mBinding.bottomNavigationView;
+        BottomNavigationViewHelper.disableShiftMode(mBottomNavigationView);
     }
 }
