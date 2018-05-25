@@ -1,7 +1,8 @@
 package com.rigerwu.wanandroid.di.builder;
 
+import com.rigerwu.wanandroid.di.module.FragmentBuildersModule;
+import com.rigerwu.wanandroid.ui.main.MainActivity;
 import com.rigerwu.wanandroid.ui.splash.SplashActivity;
-import com.rigerwu.wanandroid.ui.splash.SplashActivityModule;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -12,6 +13,9 @@ import dagger.android.ContributesAndroidInjector;
 @Module
 public abstract class ActivityBuilder {
 
-    @ContributesAndroidInjector(modules = SplashActivityModule.class)
+    @ContributesAndroidInjector
     abstract SplashActivity bindSplashActivity();
+
+    @ContributesAndroidInjector(modules = FragmentBuildersModule.class)
+    abstract MainActivity bindMainActivity();
 }

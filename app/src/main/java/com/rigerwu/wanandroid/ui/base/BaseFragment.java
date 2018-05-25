@@ -84,6 +84,7 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
     }
 
     public T getViewDataBinding() {
+
         return mViewDataBinding;
     }
 

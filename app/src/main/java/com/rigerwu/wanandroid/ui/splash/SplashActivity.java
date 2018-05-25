@@ -4,12 +4,12 @@ import android.animation.Animator;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.blankj.utilcode.util.BarUtils;
-import com.blankj.utilcode.util.LogUtils;
 import com.rigerwu.wanandroid.BR;
 import com.rigerwu.wanandroid.BuildConfig;
 import com.rigerwu.wanandroid.R;
 import com.rigerwu.wanandroid.databinding.ActivitySplashBinding;
 import com.rigerwu.wanandroid.ui.base.BaseActivity;
+import com.rigerwu.wanandroid.ui.main.MainActivity;
 
 import javax.inject.Inject;
 
@@ -37,7 +37,7 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                openMainActivity();
+                mSplashViewModel.enterMain();
             }
 
             @Override
@@ -52,7 +52,7 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
         });
 
         if (BuildConfig.DEBUG) {
-            openMainActivity();
+            mSplashViewModel.enterMain();
         } else {
             animationView.playAnimation();
         }
@@ -75,6 +75,7 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
 
     @Override
     public void openMainActivity() {
-        LogUtils.i("SplashActivity.openMainActivity->:");
+        MainActivity.launch(this);
+        finish();
     }
 }

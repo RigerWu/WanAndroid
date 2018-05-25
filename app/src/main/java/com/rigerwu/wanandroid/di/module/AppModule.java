@@ -27,7 +27,7 @@ import retrofit2.Retrofit;
 /**
  * Created by RigerWu on 2018/5/21.
  */
-@Module
+@Module(includes = ViewModelModule.class)
 public class AppModule {
 
     @Provides

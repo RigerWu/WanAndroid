@@ -4,12 +4,19 @@ import com.rigerwu.wanandroid.Data.DataManager;
 import com.rigerwu.wanandroid.ui.base.BaseViewModel;
 import com.rigerwu.wanandroid.utils.rx.SchedulerProvider;
 
+import javax.inject.Inject;
+
 /**
  * Created by RigerWu on 2018/5/21.
  */
 public class SplashViewModel extends BaseViewModel<SplashNavigator> {
 
+    @Inject
     public SplashViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
+    }
+
+    public void enterMain() {
+        getNavigator().openMainActivity();
     }
 }
