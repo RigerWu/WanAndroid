@@ -2,6 +2,7 @@ package com.rigerwu.wanandroid.ui.main;
 
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
+import android.view.View;
 
 import com.rigerwu.wanandroid.BR;
 import com.rigerwu.wanandroid.R;
@@ -49,5 +50,11 @@ public class MainFragment extends BaseFragment<FragmentMainBinding, MainFragment
         mBinding = getViewDataBinding();
         mBottomNavigationView = mBinding.bottomNavigationView;
         BottomNavigationViewHelper.disableShiftMode(mBottomNavigationView);
+
+    }
+
+    @Override
+    public void onNetReload(View v) {
+
     }
 }

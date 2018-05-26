@@ -11,6 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.blankj.utilcode.util.LogUtils;
+import com.kingja.loadsir.callback.Callback;
+import com.kingja.loadsir.core.LoadService;
+import com.kingja.loadsir.core.LoadSir;
+import com.rigerwu.wanandroid.ui.base.status.LottieEmptyCallback;
+import com.rigerwu.wanandroid.ui.base.status.LottieErrorCallback;
+import com.rigerwu.wanandroid.ui.base.status.LottieLoadingCallback;
+import com.rigerwu.wanandroid.ui.base.status.LottieNetErrorCallback;
 
 import dagger.android.support.AndroidSupportInjection;
 import me.yokeyword.fragmentation.SupportFragment;
@@ -24,6 +31,8 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
     private View mRootView;
     private T mViewDataBinding;
     private V mViewModel;
+
+    protected LoadService mBaseLoadService;
 
 
     /**
@@ -51,6 +60,13 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
      */
     public abstract void initDataAndEvent();
 
+    /**
+     * called when retry
+     *
+     * @param v
+     */
+    public abstract void onNetReload(View v);
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         performDependencyInjection();
@@ -64,15 +80,16 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mViewDataBinding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false);
         mRootView = mViewDataBinding.getRoot();
-        return mRootView;
+        mBaseLoadService = LoadSir.getDefault().register(mRootView, (Callback.OnReloadListener) this::onNetReload);
+        return mBaseLoadService.getLoadLayout();
     }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mViewDataBinding.setVariable(getBindingVariable(), mViewModel);
         mViewDataBinding.executePendingBindings();
-        LogUtils.i("BaseFragment.onViewCreated->:");
     }
 
     @Override
@@ -89,6 +106,22 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
 
     public T getViewDataBinding() {
         return mViewDataBinding;
+    }
+
+    public void showLoading() {
+        mBaseLoadService.showCallback(LottieLoadingCallback.class);
+    }
+
+    public void showError() {
+        mBaseLoadService.showCallback(LottieErrorCallback.class);
+    }
+
+    public void showNetError() {
+        mBaseLoadService.showCallback(LottieNetErrorCallback.class);
+    }
+
+    public void showEmpty() {
+        mBaseLoadService.showCallback(LottieEmptyCallback.class);
     }
 
 }
