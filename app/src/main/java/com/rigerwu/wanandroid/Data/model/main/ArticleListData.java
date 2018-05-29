@@ -18,13 +18,13 @@ public class ArticleListData {
      * total : 1296
      */
 
-    public int curPage;
-    public int offset;
-    public boolean over;
-    public int pageCount;
-    public int size;
-    public int total;
-    public List<ArticleData> datas;
+    private int curPage;
+    private int offset;
+    private boolean over;
+    private int pageCount;
+    private int size;
+    private int total;
+    private List<ArticleData> datas;
 
     public int getCurPage() {
         return curPage;

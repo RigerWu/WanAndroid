@@ -3,7 +3,7 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/menu_tab_main"
+        android:id="@+id/menu_tab_home"
         android:enabled="true"
         android:icon="@drawable/tab_home"
         android:title="@string/tab_home"

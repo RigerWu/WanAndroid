@@ -9,26 +9,29 @@
             type="com.rigerwu.wanandroid.ui.main.MainFragmentViewModel"/>
     </data>
 
-    <FrameLayout
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <include layout="@layout/toolbar"/>
+
         <FrameLayout
-            android:layout_marginBottom="@dimen/bottom_navigation_view_height"
+            android:layout_weight="1"
             android:id="@+id/fm_tab_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="0dp"/>
 
         <android.support.design.widget.BottomNavigationView
             android:id="@+id/bottom_navigation_view"
             android:elevation="16dp"
+            android:background="@color/white"
             app:menu="@menu/bottom_navigation_menu"
             app:itemIconTint="@drawable/bottom_navigation_colors"
             app:itemTextColor="@drawable/bottom_navigation_colors"
-            android:layout_gravity="bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-    </FrameLayout>
+    </LinearLayout>
 
 </layout>

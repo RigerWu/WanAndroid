@@ -2,8 +2,13 @@ package com.rigerwu.wanandroid.Data.http.api;
 
 import com.rigerwu.wanandroid.Data.model.BaseResponse;
 import com.rigerwu.wanandroid.Data.model.main.ArticleListData;
+import com.rigerwu.wanandroid.Data.model.main.BannerData;
+import com.rigerwu.wanandroid.Data.model.main.CommonUseNet;
+import com.rigerwu.wanandroid.Data.model.main.HotkeyData;
 
-import io.reactivex.Observable;
+import java.util.List;
+
+import io.reactivex.Flowable;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 
@@ -17,5 +22,14 @@ public interface WanAndroidApi {
 
 
     @GET("article/list/{num}/json")
-    Observable<BaseResponse<ArticleListData>> getHomeArticleList(@Path("num") int pageNum);
+    Flowable<BaseResponse<ArticleListData>> getHomeArticleList(@Path("num") int pageNum);
+
+    @GET("banner/json")
+    Flowable<BaseResponse<List<BannerData>>> getBanners();
+
+    @GET("friend/json")
+    Flowable<BaseResponse<List<CommonUseNet>>> getCommonUseNets();
+
+    @GET("hotkey/json")
+    Flowable<BaseResponse<List<HotkeyData>>> getHotkeyData();
 }

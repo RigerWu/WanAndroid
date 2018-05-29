@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.kingja.loadsir.callback.Callback;
 import com.kingja.loadsir.core.LoadService;
 import com.kingja.loadsir.core.LoadSir;
@@ -18,6 +17,8 @@ import com.rigerwu.wanandroid.ui.base.status.LottieEmptyCallback;
 import com.rigerwu.wanandroid.ui.base.status.LottieErrorCallback;
 import com.rigerwu.wanandroid.ui.base.status.LottieLoadingCallback;
 import com.rigerwu.wanandroid.ui.base.status.LottieNetErrorCallback;
+
+import javax.annotation.Resource;
 
 import dagger.android.support.AndroidSupportInjection;
 import me.yokeyword.fragmentation.SupportFragment;
@@ -49,6 +50,12 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
     int getLayoutId();
 
     /**
+     * @return container id
+     */
+    public abstract @Resource
+    int getContainerId();
+
+    /**
      * Override for set view model
      *
      * @return view model instance
@@ -67,6 +74,11 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
      */
     public abstract void onNetReload(View v);
 
+    /**
+     * setup views
+     */
+    protected abstract void setUp();
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         performDependencyInjection();
@@ -80,8 +92,13 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mViewDataBinding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false);
         mRootView = mViewDataBinding.getRoot();
-        mBaseLoadService = LoadSir.getDefault().register(mRootView, (Callback.OnReloadListener) this::onNetReload);
-        return mBaseLoadService.getLoadLayout();
+        initView(mRootView);
+        return mRootView;
+    }
+
+    // if need other init
+    protected void initView(View rootView) {
+
     }
 
 
@@ -90,13 +107,16 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
         super.onViewCreated(view, savedInstanceState);
         mViewDataBinding.setVariable(getBindingVariable(), mViewModel);
         mViewDataBinding.executePendingBindings();
+        View container = view.findViewById(getContainerId());
+        mBaseLoadService = LoadSir.getDefault().register(container, (Callback.OnReloadListener) this::onNetReload);
+        setUp();
     }
+
 
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
         initDataAndEvent();
-        LogUtils.i("BaseFragment.onLazyInitView->:");
     }
 
 

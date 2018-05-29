@@ -9,5 +9,4 @@ import com.rigerwu.wanandroid.Data.prefs.PreferencesHelper;
  */
 public interface DataManager extends HttpHelper, DbHelper, PreferencesHelper{
 
-
 }
