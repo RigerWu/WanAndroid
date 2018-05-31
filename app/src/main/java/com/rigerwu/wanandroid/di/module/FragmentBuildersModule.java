@@ -1,5 +1,6 @@
 package com.rigerwu.wanandroid.di.module;
 
+import com.rigerwu.wanandroid.ui.home.HomePageFragment;
 import com.rigerwu.wanandroid.ui.main.MainFragment;
 
 import dagger.Module;
@@ -13,4 +14,7 @@ public abstract class FragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract MainFragment bindMainFragment();
+
+    @ContributesAndroidInjector
+    abstract HomePageFragment bindHomePageFragment();
 }

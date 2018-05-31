@@ -3,10 +3,11 @@ package com.rigerwu.wanandroid.ui.base;
 import android.arch.lifecycle.ViewModel;
 import android.databinding.ObservableBoolean;
 
-import com.rigerwu.wanandroid.Data.DataManager;
+import com.rigerwu.wanandroid.data.DataManager;
 import com.rigerwu.wanandroid.utils.rx.SchedulerProvider;
 
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.subjects.PublishSubject;
 
 /**
  * Created by RigerWu on 2018/5/21.
@@ -16,6 +17,8 @@ public abstract class BaseViewModel<N> extends ViewModel {
     private DataManager mDataManager;
 
     private final ObservableBoolean mIsLoading = new ObservableBoolean(false);
+
+    private final PublishSubject<Integer> mLoadingStatus = PublishSubject.create();
 
     private final SchedulerProvider mSchedulerProvider;
 
@@ -49,6 +52,10 @@ public abstract class BaseViewModel<N> extends ViewModel {
 
     public void setIsLoading(boolean isLoading) {
         mIsLoading.set(isLoading);
+    }
+
+    public PublishSubject<Integer> getLoadingStatus() {
+        return mLoadingStatus;
     }
 
     public SchedulerProvider getSchedulerProvider() {

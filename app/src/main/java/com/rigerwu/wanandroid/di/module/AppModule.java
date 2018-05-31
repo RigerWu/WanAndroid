@@ -1,20 +1,22 @@
 package com.rigerwu.wanandroid.di.module;
 
 import android.app.Application;
+import android.arch.persistence.room.Room;
 import android.content.Context;
 
 import com.google.gson.Gson;
-import com.rigerwu.wanandroid.Data.AppDataManager;
-import com.rigerwu.wanandroid.Data.DataManager;
-import com.rigerwu.wanandroid.Data.db.AppDbHelper;
-import com.rigerwu.wanandroid.Data.db.DbHelper;
-import com.rigerwu.wanandroid.Data.http.AppHttpHelper;
-import com.rigerwu.wanandroid.Data.http.HttpHelper;
-import com.rigerwu.wanandroid.Data.http.api.WanAndroidApi;
-import com.rigerwu.wanandroid.Data.http.client.RetrofitClient;
-import com.rigerwu.wanandroid.Data.prefs.AppPreferencesHelper;
-import com.rigerwu.wanandroid.Data.prefs.PreferencesHelper;
 import com.rigerwu.wanandroid.app.AppConstants;
+import com.rigerwu.wanandroid.data.AppDataManager;
+import com.rigerwu.wanandroid.data.DataManager;
+import com.rigerwu.wanandroid.data.db.AppDatabase;
+import com.rigerwu.wanandroid.data.db.AppDbHelper;
+import com.rigerwu.wanandroid.data.db.DbHelper;
+import com.rigerwu.wanandroid.data.http.AppHttpHelper;
+import com.rigerwu.wanandroid.data.http.HttpHelper;
+import com.rigerwu.wanandroid.data.http.api.WanAndroidApi;
+import com.rigerwu.wanandroid.data.http.client.RetrofitClient;
+import com.rigerwu.wanandroid.data.prefs.AppPreferencesHelper;
+import com.rigerwu.wanandroid.data.prefs.PreferencesHelper;
 import com.rigerwu.wanandroid.utils.rx.AppSchedulerProvider;
 import com.rigerwu.wanandroid.utils.rx.SchedulerProvider;
 
@@ -50,9 +52,15 @@ public class AppModule {
 
     @Provides
     @Singleton
-    DbHelper provideDbHelper(AppDbHelper dbHelper) {
-        // TODO: 2018/5/23 init room when needed
-        return dbHelper;
+    DbHelper providerDbHelper(AppDbHelper appDbHelper) {
+        return appDbHelper;
+    }
+
+    @Provides
+    @Singleton
+    AppDatabase provideAppDatabase(Context context) {
+        return Room.databaseBuilder(context, AppDatabase.class, AppConstants.DB_NAME).fallbackToDestructiveMigration()
+                .build();
     }
 
     @Provides

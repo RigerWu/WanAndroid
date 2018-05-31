@@ -3,7 +3,7 @@ package com.rigerwu.wanandroid.db;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.google.gson.Gson;
-import com.rigerwu.wanandroid.Data.model.main.BannerData;
+import com.rigerwu.wanandroid.data.model.main.BannerData;
 
 import org.hamcrest.core.Is;
 import org.junit.Assert;

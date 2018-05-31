@@ -1,6 +1,6 @@
 package com.rigerwu.wanandroid.ui.main;
 
-import com.rigerwu.wanandroid.Data.DataManager;
+import com.rigerwu.wanandroid.data.DataManager;
 import com.rigerwu.wanandroid.ui.base.BaseViewModel;
 import com.rigerwu.wanandroid.utils.rx.SchedulerProvider;
 

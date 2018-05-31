@@ -3,7 +3,7 @@ package com.rigerwu.wanandroid.db;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.google.gson.Gson;
-import com.rigerwu.wanandroid.Data.model.main.ArticleData;
+import com.rigerwu.wanandroid.data.model.main.ArticleData;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -3,7 +3,7 @@ package com.rigerwu.wanandroid.db;
 import android.arch.persistence.room.Room;
 import android.support.test.InstrumentationRegistry;
 
-import com.rigerwu.wanandroid.Data.db.AppDatabase;
+import com.rigerwu.wanandroid.data.db.AppDatabase;
 
 import org.junit.After;
 import org.junit.Before;

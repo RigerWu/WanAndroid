@@ -10,13 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.kingja.loadsir.callback.Callback;
-import com.kingja.loadsir.core.LoadService;
-import com.kingja.loadsir.core.LoadSir;
-import com.rigerwu.wanandroid.ui.base.status.LottieEmptyCallback;
-import com.rigerwu.wanandroid.ui.base.status.LottieErrorCallback;
-import com.rigerwu.wanandroid.ui.base.status.LottieLoadingCallback;
-import com.rigerwu.wanandroid.ui.base.status.LottieNetErrorCallback;
+import com.rigerwu.wanandroid.ui.base.status.StatusViewController;
 
 import javax.annotation.Resource;
 
@@ -29,12 +23,16 @@ import me.yokeyword.fragmentation.SupportFragment;
 public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseViewModel>
         extends SupportFragment {
 
+    public static final int STATUS_NOMAL = 0;
+    public static final int STATUS_ERROR = 1;
+    public static final int STATUS_NET_ERROR = 2;
+    public static final int STATUS_LOADING = 3;
+    public static final int STATUS_EMPTY = 4;
+
     private View mRootView;
     private T mViewDataBinding;
     private V mViewModel;
-
-    protected LoadService mBaseLoadService;
-
+    private StatusViewController mStatusViewController;
 
     /**
      * Override for set binding variable
@@ -67,12 +65,6 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
      */
     public abstract void initDataAndEvent();
 
-    /**
-     * called when retry
-     *
-     * @param v
-     */
-    public abstract void onNetReload(View v);
 
     /**
      * setup views
@@ -108,8 +100,14 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
         mViewDataBinding.setVariable(getBindingVariable(), mViewModel);
         mViewDataBinding.executePendingBindings();
         View container = view.findViewById(getContainerId());
-        mBaseLoadService = LoadSir.getDefault().register(container, (Callback.OnReloadListener) this::onNetReload);
+//        mBaseLoadService = LoadSir.getDefault().register(container, (Callback.OnReloadListener) this::onNetReload);
+        mStatusViewController = new StatusViewController(this.getContext(), container);
+        mStatusViewController.setOnRetryClickListener(view1 -> onRetryCall());
         setUp();
+    }
+
+    protected void onRetryCall() {
+
     }
 
 
@@ -128,20 +126,24 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
         return mViewDataBinding;
     }
 
-    public void showLoading() {
-        mBaseLoadService.showCallback(LottieLoadingCallback.class);
-    }
-
-    public void showError() {
-        mBaseLoadService.showCallback(LottieErrorCallback.class);
-    }
-
-    public void showNetError() {
-        mBaseLoadService.showCallback(LottieNetErrorCallback.class);
-    }
-
-    public void showEmpty() {
-        mBaseLoadService.showCallback(LottieEmptyCallback.class);
+    public void changeViewStatus(int status) {
+        switch (status) {
+            case STATUS_NOMAL:
+                mStatusViewController.dismissStatusView();
+                break;
+            case STATUS_ERROR:
+                mStatusViewController.showErrorView();
+                break;
+            case STATUS_NET_ERROR:
+                mStatusViewController.showNetErrorView();
+                break;
+            case STATUS_LOADING:
+                mStatusViewController.showLoadingView();
+                break;
+            case STATUS_EMPTY:
+                mStatusViewController.showEmptyView();
+                break;
+        }
     }
 
 }
