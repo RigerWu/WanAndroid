@@ -37,14 +37,15 @@ ext {
             "room-test"                    : "android.arch.persistence.room:testing:${dependVersion.room}",
             "lifecycle"                    : "android.arch.lifecycle:extensions:${dependVersion.lifecycle}",
             "lifecycle-common-java8"       : "android.arch.lifecycle:common-java8:${dependVersion.lifecycle}",
-            "databinding-compiler": "com.android.databinding:compiler:3.1.2",
+            "databinding-compiler"         : "com.android.databinding:compiler:3.1.2",
 
             //ui
             "BaseRecyclerViewAdapterHelper": "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.34",
             "constraint-layout"            : "com.android.support.constraint:constraint-layout:1.1.0",
             "lottie"                       : 'com.airbnb.android:lottie:2.5.4',
-            "SmartRefreshLayout":"com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-6",
-            "SmartRefreshHeader":"com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-6",
+            "SmartRefreshLayout"           : "com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-6",
+            "SmartRefreshHeader"           : "com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-6",
+            "shinebutton"                  : 'com.sackcentury:shinebutton:0.2.0',
 
             //rx
             "rxjava"                       : "io.reactivex.rxjava2:rxjava:2.0.7",

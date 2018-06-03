@@ -11,6 +11,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.rigerwu.wanandroid.BR;
 import com.rigerwu.wanandroid.R;
 import com.rigerwu.wanandroid.data.model.main.ArticleData;
+import com.sackcentury.shinebuttonlib.ShineButton;
 
 import java.util.List;
 
@@ -38,6 +39,9 @@ public class HomePageAdapter extends BaseQuickAdapter<ArticleData, HomePageAdapt
     protected void convert(HomeViewHolder helper, ArticleData item) {
         ViewDataBinding binding = helper.getBinding();
         binding.setVariable(BR.article, item);
+        binding.executePendingBindings();
+        ((ShineButton) helper.getView(R.id.shine_button_collect)).setChecked(item.isCollect());
+
     }
 
     public static class HomeViewHolder extends BaseViewHolder {
