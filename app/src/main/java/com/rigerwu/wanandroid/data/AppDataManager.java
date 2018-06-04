@@ -47,17 +47,29 @@ public class AppDataManager implements DataManager {
 
     @Override
     public Flowable<BaseResponse<ArticleListData>> getHomeArticleList(int pageNum) {
-        return mHttpHelper.getHomeArticleList(pageNum);
+        return mHttpHelper.getHomeArticleList(pageNum).doOnNext(articleListDataBaseResponse -> {
+            if (articleListDataBaseResponse.isSuccess()) {
+                insertArticles(articleListDataBaseResponse.getData().getDatas());
+            }
+        });
     }
 
     @Override
     public Flowable<BaseResponse<List<BannerData>>> getBanners() {
-        return mHttpHelper.getBanners();
+        return mHttpHelper.getBanners().doOnNext(listBaseResponse -> {
+            if (listBaseResponse.isSuccess()) {
+                insertBanners(listBaseResponse.getData());
+            }
+        });
     }
 
     @Override
     public Flowable<BaseResponse<List<CommonUseNet>>> getCommonUseNets() {
-        return mHttpHelper.getCommonUseNets();
+        return mHttpHelper.getCommonUseNets().doOnNext(listBaseResponse -> {
+            if (listBaseResponse.isSuccess()) {
+                insertCommonUseNets(listBaseResponse.getData());
+            }
+        });
     }
 
     @Override
@@ -101,7 +113,7 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public void insertBanners(BannerData... bannerDatas) {
+    public void insertBanners(List<BannerData> bannerDatas) {
         mDbHelper.insertBanners(bannerDatas);
     }
 
@@ -116,7 +128,7 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public void insertCommonUseNets(CommonUseNet... commonUseNets) {
+    public void insertCommonUseNets(List<CommonUseNet> commonUseNets) {
         mDbHelper.insertCommonUseNets(commonUseNets);
     }
 
@@ -126,8 +138,8 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public void insertArticles(ArticleData... articleData) {
-        mDbHelper.insertArticles(articleData);
+    public void insertArticles(List<ArticleData> articleDatas) {
+        mDbHelper.insertArticles(articleDatas);
     }
 
     @Override

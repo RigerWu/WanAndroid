@@ -19,7 +19,7 @@ import io.reactivex.Flowable;
 public interface ArticleDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertArticles(ArticleData... articleData);
+    void insertArticles(List<ArticleData> articleDatas);
 
     @Query("select * from article_data order by id desc limit (:page-1) * 20, 20")
     Flowable<List<ArticleData>> loadArticles(int page);

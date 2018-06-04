@@ -12,9 +12,9 @@ import com.rigerwu.wanandroid.BR;
 import com.rigerwu.wanandroid.R;
 import com.rigerwu.wanandroid.databinding.FragmentHomePageBinding;
 import com.rigerwu.wanandroid.ui.base.BaseFragment;
+import com.rigerwu.wanandroid.ui.base.status.ListStatus;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import javax.inject.Inject;
@@ -33,6 +33,7 @@ public class HomePageFragment extends BaseFragment<FragmentHomePageBinding, Home
     private SmartRefreshLayout mRefreshLayout;
     private RecyclerView mRecyclerView;
     private HomePageAdapter mHomePageAdapter;
+    private boolean isRefresh = true;
 
     public static HomePageFragment newInstance() {
         Bundle args = new Bundle();
@@ -66,65 +67,59 @@ public class HomePageFragment extends BaseFragment<FragmentHomePageBinding, Home
     @Override
     public void initDataAndEvent() {
         mViewModel.getCompositeDisposable().add(
-                mViewModel.getLoadingStatus().subscribe(status -> {
-                    changeViewStatus(status);
-                    changeRefreshStatus(status);
-                }));
+                mViewModel.getLoadingStatus().subscribe(this::changeViewStatus));
+
+        mViewModel.getCompositeDisposable().add(
+                mViewModel.getRefreshState().subscribe(refreshState -> {
+                    changeRefreshStatus(refreshState);
+                })
+        );
 
         mViewModel.getArticleListLiveData().observe(this, articleDataList -> {
-            LogUtils.i("HomePageFragment.initDataAndEvent->:" + articleDataList.size());
-            if (mRefreshLayout.getState() == RefreshState.Refreshing) {
+
+            if (isRefresh) {
                 LogUtils.i("HomePageFragment.initDataAndEvent->:replace");
                 mHomePageAdapter.replaceData(articleDataList);
             } else {
                 LogUtils.i("HomePageFragment.initDataAndEvent->:add");
                 mHomePageAdapter.addData(articleDataList);
             }
+            LogUtils.i("HomePageFragment.initDataAndEvent->:itemcount====" + mHomePageAdapter.getItemCount());
             mBinding.executePendingBindings();
         });
 
         mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                isRefresh = true;
                 mViewModel.refresh();
             }
 
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-
+                isRefresh = false;
                 mViewModel.loadMore();
             }
         });
     }
 
-    private void changeRefreshStatus(Integer status) {
+    private void changeRefreshStatus(ListStatus status) {
         switch (status) {
-            case STATUS_NOMAL:
-                if (mRefreshLayout.getState() == RefreshState.Refreshing) {
-                    mRefreshLayout.finishRefresh();
-                } else if (mRefreshLayout.getState() == RefreshState.Loading) {
-                    mRefreshLayout.finishLoadMore();
-                }
+            case REFRESHING:
                 break;
-            case STATUS_ERROR:
-                if (mRefreshLayout.getState() == RefreshState.Refreshing) {
-                    mRefreshLayout.finishRefresh(false);
-                } else if (mRefreshLayout.getState() == RefreshState.Loading) {
-                    mRefreshLayout.finishLoadMore(false);
-                }
+            case LOADING_MORE:
                 break;
-            case STATUS_NET_ERROR:
-                if (mRefreshLayout.getState() == RefreshState.Refreshing) {
-                    mRefreshLayout.finishRefresh(false);
-                } else if (mRefreshLayout.getState() == RefreshState.Loading) {
-                    mRefreshLayout.finishLoadMore(false);
-                }
+            case REFRESH_ERROR:
+                mRefreshLayout.finishRefresh(false);
                 break;
-            case STATUS_LOADING:
-
+            case REFRESH_FINISH:
+                mRefreshLayout.finishRefresh();
                 break;
-            case STATUS_EMPTY:
-
+            case LOAD_MORE_ERROR:
+                mRefreshLayout.finishLoadMore(false);
+                break;
+            case LOAD_MORE_FINISH:
+                mRefreshLayout.finishLoadMore();
                 break;
         }
     }
@@ -138,5 +133,11 @@ public class HomePageFragment extends BaseFragment<FragmentHomePageBinding, Home
         mHomePageAdapter = new HomePageAdapter(R.layout.fragment_home_item, null);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mHomePageAdapter);
+    }
+
+    @Override
+    protected void onRetryCall() {
+        isRefresh = true;
+        mViewModel.refresh();
     }
 }

@@ -8,11 +8,14 @@ import com.rigerwu.wanandroid.data.model.main.ArticleData;
 import com.rigerwu.wanandroid.data.model.main.ArticleListData;
 import com.rigerwu.wanandroid.ui.base.BaseFragment;
 import com.rigerwu.wanandroid.ui.base.BaseViewModel;
+import com.rigerwu.wanandroid.ui.base.status.ListStatus;
 import com.rigerwu.wanandroid.utils.rx.SchedulerProvider;
 
 import java.util.List;
 
 import javax.inject.Inject;
+
+import io.reactivex.subjects.PublishSubject;
 
 /**
  * Created by RigerWu on 2018/5/29.
@@ -26,11 +29,13 @@ public class HomePageViewModel extends BaseViewModel<HomePageNavigator> {
     private boolean hasMore;
     private boolean hasData;
 
+    private PublishSubject<ListStatus> mRefreshState = PublishSubject.create();
+
     @Inject
     public HomePageViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
         mArticleListLiveData = new MutableLiveData<>();
-        fetchArticleData(currentPage);
+        initData();
     }
 
     public void refresh() {
@@ -47,10 +52,24 @@ public class HomePageViewModel extends BaseViewModel<HomePageNavigator> {
         return hasMore;
     }
 
+    private void initData() {
+        getLoadingStatus().onNext(BaseFragment.STATUS_LOADING);
+        getCompositeDisposable().add(getDataManager()
+                .loadArticles(0)
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(articleData -> {
+                    if (articleData == null || articleData.size() == 0) {
+                        fetchArticleData(0);
+                    } else {
+                        mArticleListLiveData.setValue(articleData);
+                        getLoadingStatus().onNext(BaseFragment.STATUS_NOMAL);
+                    }
+                }));
+    }
+
     private void fetchArticleData(int pageNum) {
-        if (pageNum == 0 && !hasData) {
-            getLoadingStatus().onNext(BaseFragment.STATUS_LOADING);
-        }
+        mRefreshState.onNext(pageNum == 0 ? ListStatus.REFRESHING : ListStatus.REFRESHING);
         getCompositeDisposable().add(getDataManager()
                 .getHomeArticleList(pageNum)
                 .subscribeOn(getSchedulerProvider().io())
@@ -63,14 +82,24 @@ public class HomePageViewModel extends BaseViewModel<HomePageNavigator> {
                         totalPage = data.getTotal();
                         hasMore = currentPage < totalPage;
                         mArticleListLiveData.setValue(data.getDatas());
-                        getLoadingStatus().onNext(BaseFragment.STATUS_NOMAL);
+                        mRefreshState.onNext(pageNum == 0 ? ListStatus.REFRESH_FINISH : ListStatus.LOAD_MORE_FINISH);
+
+                    } else {
+                        getLoadingStatus().onNext(BaseFragment.STATUS_EMPTY);
                     }
-                }, throwable -> getLoadingStatus().onNext(BaseFragment.STATUS_NET_ERROR))
+                }, throwable -> {
+                    throwable.printStackTrace();
+                    getLoadingStatus().onNext(BaseFragment.STATUS_NET_ERROR);
+                })
         );
 
     }
 
     public MutableLiveData<List<ArticleData>> getArticleListLiveData() {
         return mArticleListLiveData;
+    }
+
+    public PublishSubject<ListStatus> getRefreshState() {
+        return mRefreshState;
     }
 }

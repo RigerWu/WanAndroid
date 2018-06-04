@@ -28,7 +28,7 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public void insertBanners(BannerData... bannerDatas) {
+    public void insertBanners(List<BannerData> bannerDatas) {
         mDatabase.getHomeInfoDao().insertBanners(bannerDatas);
     }
 
@@ -43,7 +43,7 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public void insertCommonUseNets(CommonUseNet... commonUseNets) {
+    public void insertCommonUseNets(List<CommonUseNet> commonUseNets) {
         mDatabase.getHomeInfoDao().insertCommonUseNets(commonUseNets);
     }
 
@@ -53,7 +53,7 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public void insertArticles(ArticleData... articleData) {
+    public void insertArticles(List<ArticleData> articleData) {
         mDatabase.getArticleDao().insertArticles(articleData);
     }
 

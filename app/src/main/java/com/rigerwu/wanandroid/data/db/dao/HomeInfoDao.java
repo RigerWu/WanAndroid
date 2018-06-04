@@ -23,7 +23,7 @@ public interface HomeInfoDao {
     Flowable<List<BannerData>> loadBanners();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertBanners(BannerData... bannerDatas);
+    void insertBanners(List<BannerData> bannerDatas);
 
     @Query("delete from banner_data")
     void deleteAllBanner();
@@ -34,7 +34,7 @@ public interface HomeInfoDao {
     Flowable<List<CommonUseNet>> loadCommonUseNets();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertCommonUseNets(CommonUseNet... commonUseNets);
+    void insertCommonUseNets(List<CommonUseNet> commonUseNets);
 
     @Query("delete from common_use_net")
     void deleteAllCommonUseNets();

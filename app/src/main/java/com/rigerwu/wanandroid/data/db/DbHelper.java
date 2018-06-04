@@ -15,18 +15,18 @@ public interface DbHelper {
 
     Flowable<List<BannerData>> loadBanners();
 
-    void insertBanners(BannerData... bannerDatas);
+    void insertBanners(List<BannerData> bannerDatas);
 
     void deleteAllBanner();
 
 
     Flowable<List<CommonUseNet>> loadCommonUseNets();
 
-    void insertCommonUseNets(CommonUseNet... commonUseNets);
+    void insertCommonUseNets(List<CommonUseNet> commonUseNets);
 
     void deleteAllCommonUseNets();
 
-    void insertArticles(ArticleData... articleData);
+    void insertArticles(List<ArticleData> articleDatas);
 
     Flowable<List<ArticleData>> loadArticles(int page);
 
