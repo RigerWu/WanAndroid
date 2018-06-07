@@ -24,8 +24,7 @@ import javax.inject.Inject;
  */
 public class HomePageFragment extends BaseFragment<FragmentHomePageBinding, HomePageViewModel> {
 
-    @Inject
-    HomePageViewModel mViewModel;
+    private HomePageViewModel mViewModel;
     @Inject
     ViewModelProvider.Factory mFactory;
 
@@ -34,6 +33,7 @@ public class HomePageFragment extends BaseFragment<FragmentHomePageBinding, Home
     private RecyclerView mRecyclerView;
     private HomePageAdapter mHomePageAdapter;
     private boolean isRefresh = true;
+    private int expectListSize = 20;
 
     public static HomePageFragment newInstance() {
         Bundle args = new Bundle();
@@ -59,6 +59,7 @@ public class HomePageFragment extends BaseFragment<FragmentHomePageBinding, Home
 
     @Override
     public HomePageViewModel getViewModel() {
+        LogUtils.i("HomePageFragment.getViewModel->:创建viewmodel=============");
         mViewModel = ViewModelProviders.of(this, mFactory).get(HomePageViewModel.class);
         return mViewModel;
     }
@@ -77,27 +78,24 @@ public class HomePageFragment extends BaseFragment<FragmentHomePageBinding, Home
 
         mViewModel.getArticleListLiveData().observe(this, articleDataList -> {
 
-            if (isRefresh) {
-                LogUtils.i("HomePageFragment.initDataAndEvent->:replace");
-                mHomePageAdapter.replaceData(articleDataList);
-            } else {
-                LogUtils.i("HomePageFragment.initDataAndEvent->:add");
-                mHomePageAdapter.addData(articleDataList);
+            if (articleDataList != null) {
+                mHomePageAdapter.setNewData(articleDataList);
+                mBinding.executePendingBindings();
             }
-            LogUtils.i("HomePageFragment.initDataAndEvent->:itemcount====" + mHomePageAdapter.getItemCount());
-            mBinding.executePendingBindings();
         });
 
         mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 isRefresh = true;
+                expectListSize = 20;
                 mViewModel.refresh();
             }
 
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 isRefresh = false;
+                expectListSize += 20;
                 mViewModel.loadMore();
             }
         });
