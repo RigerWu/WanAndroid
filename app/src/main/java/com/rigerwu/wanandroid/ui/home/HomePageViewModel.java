@@ -6,6 +6,7 @@ import com.blankj.utilcode.util.LogUtils;
 import com.rigerwu.wanandroid.data.DataManager;
 import com.rigerwu.wanandroid.data.model.main.ArticleData;
 import com.rigerwu.wanandroid.data.model.main.ArticleListData;
+import com.rigerwu.wanandroid.data.model.main.BannerData;
 import com.rigerwu.wanandroid.ui.base.BaseFragment;
 import com.rigerwu.wanandroid.ui.base.BaseViewModel;
 import com.rigerwu.wanandroid.ui.base.status.ListStatus;
@@ -33,12 +34,16 @@ public class HomePageViewModel extends BaseViewModel<HomePageNavigator> {
     private boolean mHasMore;
 
     private MutableLiveData<List<ArticleData>> mArticleListLiveData;
+    private MutableLiveData<List<BannerData>> mBannerListLiveData;
     private List<ArticleData> mCurrentList;
     private PublishSubject<ListStatus> mRefreshState = PublishSubject.create();
 
     @Inject
     public HomePageViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
+        if (mBannerListLiveData == null) {
+            mBannerListLiveData = new MutableLiveData<>();
+        }
         if (mArticleListLiveData == null) {
             mArticleListLiveData = new MutableLiveData<>();
         }
@@ -48,6 +53,7 @@ public class HomePageViewModel extends BaseViewModel<HomePageNavigator> {
 
     public void refresh() {
         mCurrentPage = 0;
+        fetchBannerData();
         fetchArticleData(mCurrentPage);
     }
 
@@ -63,6 +69,19 @@ public class HomePageViewModel extends BaseViewModel<HomePageNavigator> {
     private void initData() {
         LogUtils.i("HomePageViewModel.initData->:module init ====");
         getLoadingStatus().onNext(BaseFragment.STATUS_LOADING);
+
+        getCompositeDisposable().add(getDataManager()
+                .loadBanners()
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(bannerData -> {
+                    if (bannerData == null || bannerData.size() == 0) {
+                        fetchBannerData();
+                    } else {
+                        mBannerListLiveData.setValue(bannerData);
+                    }
+                }));
+
         getCompositeDisposable().add(getDataManager()
                 .loadArticles(0)
                 // get initial data from db only once, or it will observe when db changed
@@ -77,6 +96,18 @@ public class HomePageViewModel extends BaseViewModel<HomePageNavigator> {
                         mCurrentList = articleData;
                         mArticleListLiveData.setValue(articleData);
                         getLoadingStatus().onNext(BaseFragment.STATUS_NOMAL);
+                    }
+                }));
+    }
+
+    private void fetchBannerData() {
+        getCompositeDisposable().add(getDataManager()
+                .getBanners()
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(listBaseResponse -> {
+                    if (listBaseResponse != null && listBaseResponse.getData() != null) {
+                        mBannerListLiveData.setValue(listBaseResponse.getData());
                     }
                 }));
     }
@@ -136,5 +167,9 @@ public class HomePageViewModel extends BaseViewModel<HomePageNavigator> {
 
     public PublishSubject<ListStatus> getRefreshState() {
         return mRefreshState;
+    }
+
+    public MutableLiveData<List<BannerData>> getBannerListLiveData() {
+        return mBannerListLiveData;
     }
 }

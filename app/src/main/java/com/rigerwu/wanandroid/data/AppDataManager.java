@@ -109,7 +109,7 @@ public class AppDataManager implements DataManager {
 
     @Override
     public Flowable<List<BannerData>> loadBanners() {
-        return null;
+        return mDbHelper.loadBanners();
     }
 
     @Override
