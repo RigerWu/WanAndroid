@@ -12,7 +12,7 @@ import io.reactivex.subjects.PublishSubject;
 /**
  * Created by RigerWu on 2018/5/21.
  */
-public abstract class BaseViewModel<N> extends ViewModel {
+public abstract class BaseViewModel extends ViewModel {
 
     private DataManager mDataManager;
 
@@ -23,8 +23,6 @@ public abstract class BaseViewModel<N> extends ViewModel {
     private final SchedulerProvider mSchedulerProvider;
 
     private CompositeDisposable mCompositeDisposable;
-
-    private N mNavigator;
 
     public BaseViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
         mDataManager = dataManager;
@@ -62,11 +60,5 @@ public abstract class BaseViewModel<N> extends ViewModel {
         return mSchedulerProvider;
     }
 
-    public N getNavigator() {
-        return mNavigator;
-    }
 
-    public void setNavigator(N navigator) {
-        mNavigator = navigator;
-    }
 }

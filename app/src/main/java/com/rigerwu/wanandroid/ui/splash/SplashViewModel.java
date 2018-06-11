@@ -9,14 +9,10 @@ import javax.inject.Inject;
 /**
  * Created by RigerWu on 2018/5/21.
  */
-public class SplashViewModel extends BaseViewModel<SplashNavigator> {
+public class SplashViewModel extends BaseViewModel {
 
     @Inject
     public SplashViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
-    }
-
-    public void enterMain() {
-        getNavigator().openMainActivity();
     }
 }

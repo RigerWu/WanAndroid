@@ -78,7 +78,7 @@ ext {
             "logger"                       : "com.orhanobut:logger:2.1.1",
             "fragmentation"                : "me.yokeyword:fragmentation:${dependVersion["fragmentation"]}",
             "fragmentation-swipeback"      : "me.yokeyword:fragmentation-swipeback:${dependVersion["fragmentation"]}",
-            "crashreport"                  : "com.tencent.bugly:crashreport:latest.release",
+            "crashreport"                  : "com.tencent.bugly:crashreport:2.6.6.1",
             "utilcode"                     : 'com.blankj:utilcode:1.15.1',
 
             //canary

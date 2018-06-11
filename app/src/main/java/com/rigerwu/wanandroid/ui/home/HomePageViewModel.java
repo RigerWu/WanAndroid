@@ -26,7 +26,7 @@ import io.reactivex.subjects.PublishSubject;
 /**
  * Created by RigerWu on 2018/5/29.
  */
-public class HomePageViewModel extends BaseViewModel<HomePageNavigator> {
+public class HomePageViewModel extends BaseViewModel {
 
 
     private int mCurrentPage = 0;

@@ -9,20 +9,22 @@ import com.rigerwu.wanandroid.BuildConfig;
 import com.rigerwu.wanandroid.R;
 import com.rigerwu.wanandroid.databinding.ActivitySplashBinding;
 import com.rigerwu.wanandroid.ui.base.BaseActivity;
-import com.rigerwu.wanandroid.ui.main.MainActivity;
+import com.rigerwu.wanandroid.ui.navigation.NavigationController;
 
 import javax.inject.Inject;
 
-public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashViewModel> implements SplashNavigator {
+public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashViewModel> {
 
     @Inject
     SplashViewModel mSplashViewModel;
+
+    @Inject
+    NavigationController mNavigationController;
 
     private ActivitySplashBinding mBinding;
 
     @Override
     protected void initDataAndEvent() {
-        mSplashViewModel.setNavigator(this);
         // set status bar invisiable
         BarUtils.setStatusBarVisibility(this, false);
 
@@ -37,7 +39,7 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                mSplashViewModel.enterMain();
+                openMainActivity();
             }
 
             @Override
@@ -52,7 +54,7 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
         });
 
         if (BuildConfig.DEBUG) {
-            mSplashViewModel.enterMain();
+            openMainActivity();
         } else {
             animationView.playAnimation();
         }
@@ -73,9 +75,8 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
         return mSplashViewModel;
     }
 
-    @Override
     public void openMainActivity() {
-        MainActivity.launch(this);
+        mNavigationController.showMain();
         finish();
     }
 }

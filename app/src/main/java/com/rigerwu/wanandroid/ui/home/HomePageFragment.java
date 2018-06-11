@@ -10,12 +10,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.blankj.utilcode.util.LogUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.rigerwu.wanandroid.BR;
 import com.rigerwu.wanandroid.R;
+import com.rigerwu.wanandroid.data.model.main.ArticleData;
 import com.rigerwu.wanandroid.data.model.main.BannerData;
 import com.rigerwu.wanandroid.databinding.FragmentHomePageBinding;
 import com.rigerwu.wanandroid.ui.base.BaseFragment;
 import com.rigerwu.wanandroid.ui.base.status.ListStatus;
+import com.rigerwu.wanandroid.ui.navigation.NavigationController;
 import com.rigerwu.wanandroid.ui.widget.BannerImageLoader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -38,13 +41,13 @@ public class HomePageFragment extends BaseFragment<FragmentHomePageBinding, Home
     private HomePageViewModel mViewModel;
     @Inject
     ViewModelProvider.Factory mFactory;
+    @Inject
+    NavigationController mNavigationController;
 
     FragmentHomePageBinding mBinding;
     private SmartRefreshLayout mRefreshLayout;
     private RecyclerView mRecyclerView;
     private HomePageAdapter mHomePageAdapter;
-    private boolean isRefresh = true;
-    private int expectListSize = 20;
     private Banner mBanner;
 
     public static HomePageFragment newInstance() {
@@ -102,16 +105,19 @@ public class HomePageFragment extends BaseFragment<FragmentHomePageBinding, Home
         mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                isRefresh = true;
-                expectListSize = 20;
                 mViewModel.refresh();
             }
 
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                isRefresh = false;
-                expectListSize += 20;
                 mViewModel.loadMore();
+            }
+        });
+
+        mHomePageAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                ArticleData item = mHomePageAdapter.getItem(position);
             }
         });
     }
@@ -193,7 +199,6 @@ public class HomePageFragment extends BaseFragment<FragmentHomePageBinding, Home
 
     @Override
     protected void onRetryCall() {
-        isRefresh = true;
         mViewModel.refresh();
     }
 }
