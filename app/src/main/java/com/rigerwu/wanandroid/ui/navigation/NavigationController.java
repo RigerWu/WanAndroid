@@ -1,10 +1,14 @@
 package com.rigerwu.wanandroid.ui.navigation;
 
 import android.content.Context;
+import android.os.Bundle;
 
 import com.rigerwu.wanandroid.ui.main.MainActivity;
+import com.rigerwu.wanandroid.ui.webview.ArticleDetailFragment;
 
 import javax.inject.Inject;
+
+import me.yokeyword.fragmentation.SupportFragment;
 
 /**
  * Created by RigerWu on 2018/6/10.
@@ -20,6 +24,12 @@ public class NavigationController {
 
     public void showMain() {
         MainActivity.launch(mContext);
+    }
+
+    public void readArticleDetail(SupportFragment fromFragment, String articleUrl) {
+        Bundle bundle = new Bundle();
+        bundle.putString(ArticleDetailFragment.URL_KEY, articleUrl);
+        ((SupportFragment) fromFragment.getParentFragment()).start(ArticleDetailFragment.getInstance(bundle));
     }
 
 }

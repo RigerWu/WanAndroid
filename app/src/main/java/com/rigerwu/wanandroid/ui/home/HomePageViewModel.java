@@ -1,6 +1,8 @@
 package com.rigerwu.wanandroid.ui.home;
 
 import android.arch.lifecycle.MutableLiveData;
+import android.databinding.ObservableArrayList;
+import android.databinding.ObservableList;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.rigerwu.wanandroid.data.DataManager;
@@ -33,10 +35,13 @@ public class HomePageViewModel extends BaseViewModel {
     private int mTotalPage;
     private boolean mHasMore;
 
+    public final ObservableList<ArticleData> mObservableArticleList = new ObservableArrayList<>();
+
     private MutableLiveData<List<ArticleData>> mArticleListLiveData;
     private MutableLiveData<List<BannerData>> mBannerListLiveData;
     private List<ArticleData> mCurrentList;
     private PublishSubject<ListStatus> mRefreshState = PublishSubject.create();
+
 
     @Inject
     public HomePageViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
@@ -63,6 +68,7 @@ public class HomePageViewModel extends BaseViewModel {
     }
 
     public boolean isHasMore() {
+        LogUtils.i("HomePageViewModel.isHasMore->:" + mHasMore);
         return mHasMore;
     }
 
@@ -93,6 +99,7 @@ public class HomePageViewModel extends BaseViewModel {
                         fetchArticleData(0);
                     } else {
                         LogUtils.i("HomePageViewModel.initData->: room database call");
+                        mHasMore = true;
                         mCurrentList = articleData;
                         mArticleListLiveData.setValue(articleData);
                         getLoadingStatus().onNext(BaseFragment.STATUS_NOMAL);
@@ -139,6 +146,7 @@ public class HomePageViewModel extends BaseViewModel {
 
     }
 
+
     private void handleFetchData(List<ArticleData> newList) {
 
         if (mCurrentPage == 0) {
@@ -171,5 +179,10 @@ public class HomePageViewModel extends BaseViewModel {
 
     public MutableLiveData<List<BannerData>> getBannerListLiveData() {
         return mBannerListLiveData;
+    }
+
+    public void setObservableList(List<ArticleData> articleDataList) {
+        mObservableArticleList.clear();
+        mObservableArticleList.addAll(articleDataList);
     }
 }

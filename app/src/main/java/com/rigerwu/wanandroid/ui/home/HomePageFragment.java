@@ -13,7 +13,6 @@ import com.blankj.utilcode.util.LogUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.rigerwu.wanandroid.BR;
 import com.rigerwu.wanandroid.R;
-import com.rigerwu.wanandroid.data.model.main.ArticleData;
 import com.rigerwu.wanandroid.data.model.main.BannerData;
 import com.rigerwu.wanandroid.databinding.FragmentHomePageBinding;
 import com.rigerwu.wanandroid.ui.base.BaseFragment;
@@ -97,8 +96,7 @@ public class HomePageFragment extends BaseFragment<FragmentHomePageBinding, Home
                 if (!mViewModel.isHasMore()) {
                     mRefreshLayout.setNoMoreData(true);
                 }
-                mHomePageAdapter.setNewData(articleDataList);
-                mBinding.executePendingBindings();
+                mViewModel.setObservableList(articleDataList);
             }
         });
 
@@ -114,10 +112,11 @@ public class HomePageFragment extends BaseFragment<FragmentHomePageBinding, Home
             }
         });
 
-        mHomePageAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+        mHomePageAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                ArticleData item = mHomePageAdapter.getItem(position);
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                String link = mHomePageAdapter.getItem(position).getLink();
+                mNavigationController.readArticleDetail(HomePageFragment.this, link);
             }
         });
     }
