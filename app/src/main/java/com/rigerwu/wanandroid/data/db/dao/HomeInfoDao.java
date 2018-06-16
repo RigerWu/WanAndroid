@@ -7,6 +7,7 @@ import android.arch.persistence.room.Query;
 
 import com.rigerwu.wanandroid.data.model.main.BannerData;
 import com.rigerwu.wanandroid.data.model.main.CommonUseNet;
+import com.rigerwu.wanandroid.data.model.tree.TreeData;
 
 import java.util.List;
 
@@ -39,5 +40,10 @@ public interface HomeInfoDao {
     @Query("delete from common_use_net")
     void deleteAllCommonUseNets();
 
+    // tree data
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertTreeDatas(List<TreeData> treeDataList);
 
+    @Query("select * from tree_data")
+    Flowable<List<TreeData>> loadTreeDatas();
 }

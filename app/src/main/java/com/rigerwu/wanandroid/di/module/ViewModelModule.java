@@ -3,8 +3,9 @@ package com.rigerwu.wanandroid.di.module;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 
-import com.rigerwu.wanandroid.ui.home.HomePageViewModel;
 import com.rigerwu.wanandroid.ui.main.MainFragmentViewModel;
+import com.rigerwu.wanandroid.ui.main.home.HomePageViewModel;
+import com.rigerwu.wanandroid.ui.main.tree.TreePageViewModel;
 import com.rigerwu.wanandroid.ui.splash.SplashViewModel;
 
 import dagger.Binds;
@@ -34,4 +35,9 @@ public abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(HomePageViewModel.class)
     abstract ViewModel bindHomePageFragmentViewModel(HomePageViewModel homePageViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(TreePageViewModel.class)
+    abstract ViewModel bindTreePageFragmentViewModel(TreePageViewModel treePageViewModel);
 }

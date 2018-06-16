@@ -9,7 +9,7 @@ import com.rigerwu.wanandroid.BR;
 import com.rigerwu.wanandroid.R;
 import com.rigerwu.wanandroid.databinding.FragmentMainBinding;
 import com.rigerwu.wanandroid.ui.base.BaseToolbarFragment;
-import com.rigerwu.wanandroid.ui.home.HomePageFragment;
+import com.rigerwu.wanandroid.ui.main.home.HomePageFragment;
 import com.rigerwu.wanandroid.utils.BottomNavigationViewHelper;
 
 import javax.inject.Inject;

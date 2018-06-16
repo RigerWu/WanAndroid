@@ -3,6 +3,7 @@ package com.rigerwu.wanandroid.data.db;
 import com.rigerwu.wanandroid.data.model.main.ArticleData;
 import com.rigerwu.wanandroid.data.model.main.BannerData;
 import com.rigerwu.wanandroid.data.model.main.CommonUseNet;
+import com.rigerwu.wanandroid.data.model.tree.TreeData;
 
 import java.util.List;
 
@@ -80,5 +81,15 @@ public class AppDbHelper implements DbHelper {
     @Override
     public Flowable<List<ArticleData>> loadCollectedArticles() {
         return mDatabase.getArticleDao().loadCollectedArticles();
+    }
+
+    @Override
+    public void insertTreeDatas(List<TreeData> treeDataList) {
+        mDatabase.getHomeInfoDao().insertTreeDatas(treeDataList);
+    }
+
+    @Override
+    public Flowable<List<TreeData>> loadTreeDatas() {
+        return mDatabase.getHomeInfoDao().loadTreeDatas();
     }
 }

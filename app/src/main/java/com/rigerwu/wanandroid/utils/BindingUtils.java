@@ -4,7 +4,7 @@ import android.databinding.BindingAdapter;
 import android.support.v7.widget.RecyclerView;
 
 import com.rigerwu.wanandroid.data.model.main.ArticleData;
-import com.rigerwu.wanandroid.ui.home.HomePageAdapter;
+import com.rigerwu.wanandroid.ui.main.home.HomePageAdapter;
 
 import java.util.List;
 

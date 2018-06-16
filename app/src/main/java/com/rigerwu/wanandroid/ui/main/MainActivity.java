@@ -28,6 +28,7 @@ public class MainActivity extends SupportActivity implements HasSupportFragmentI
 
     public static void launch(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 

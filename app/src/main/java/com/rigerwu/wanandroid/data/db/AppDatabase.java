@@ -11,6 +11,7 @@ import com.rigerwu.wanandroid.data.model.main.ArticleData;
 import com.rigerwu.wanandroid.data.model.main.BannerData;
 import com.rigerwu.wanandroid.data.model.main.CommonUseNet;
 import com.rigerwu.wanandroid.data.model.main.HotkeyData;
+import com.rigerwu.wanandroid.data.model.tree.TreeData;
 
 /**
  * Created by RigerWu on 2018/5/28.
@@ -19,7 +20,8 @@ import com.rigerwu.wanandroid.data.model.main.HotkeyData;
         BannerData.class,
         ArticleData.class,
         CommonUseNet.class,
-        HotkeyData.class
+        HotkeyData.class,
+        TreeData.class
 }, version = 1, exportSchema = false)
 @TypeConverters({RoomDataConverter.class})
 public abstract class AppDatabase extends RoomDatabase {

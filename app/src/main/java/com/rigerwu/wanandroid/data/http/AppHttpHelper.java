@@ -6,6 +6,7 @@ import com.rigerwu.wanandroid.data.model.main.ArticleListData;
 import com.rigerwu.wanandroid.data.model.main.BannerData;
 import com.rigerwu.wanandroid.data.model.main.CommonUseNet;
 import com.rigerwu.wanandroid.data.model.main.HotkeyData;
+import com.rigerwu.wanandroid.data.model.tree.TreeData;
 
 import java.util.List;
 
@@ -45,5 +46,10 @@ public class AppHttpHelper implements HttpHelper{
     @Override
     public Flowable<BaseResponse<List<HotkeyData>>> getHotkeyData() {
         return mWanAndroidApi.getHotkeyData();
+    }
+
+    @Override
+    public Flowable<BaseResponse<List<TreeData>>> getTreeData() {
+        return mWanAndroidApi.getTreeData();
     }
 }

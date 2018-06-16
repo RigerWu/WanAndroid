@@ -11,6 +11,7 @@ import com.rigerwu.wanandroid.data.model.main.ArticleListData;
 import com.rigerwu.wanandroid.data.model.main.BannerData;
 import com.rigerwu.wanandroid.data.model.main.CommonUseNet;
 import com.rigerwu.wanandroid.data.model.main.HotkeyData;
+import com.rigerwu.wanandroid.data.model.tree.TreeData;
 import com.rigerwu.wanandroid.data.prefs.PreferencesHelper;
 
 import java.util.List;
@@ -75,6 +76,15 @@ public class AppDataManager implements DataManager {
     @Override
     public Flowable<BaseResponse<List<HotkeyData>>> getHotkeyData() {
         return mHttpHelper.getHotkeyData();
+    }
+
+    @Override
+    public Flowable<BaseResponse<List<TreeData>>> getTreeData() {
+        return mHttpHelper.getTreeData().doOnNext(listBaseResponse -> {
+            if (listBaseResponse.isSuccess()) {
+
+            }
+        });
     }
 
     @Override
@@ -165,5 +175,15 @@ public class AppDataManager implements DataManager {
     @Override
     public Flowable<List<ArticleData>> loadCollectedArticles() {
         return mDbHelper.loadCollectedArticles();
+    }
+
+    @Override
+    public void insertTreeDatas(List<TreeData> treeDataList) {
+        mDbHelper.insertTreeDatas(treeDataList);
+    }
+
+    @Override
+    public Flowable<List<TreeData>> loadTreeDatas() {
+        return mDbHelper.loadTreeDatas();
     }
 }

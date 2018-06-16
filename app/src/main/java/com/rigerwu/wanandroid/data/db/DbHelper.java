@@ -3,6 +3,7 @@ package com.rigerwu.wanandroid.data.db;
 import com.rigerwu.wanandroid.data.model.main.ArticleData;
 import com.rigerwu.wanandroid.data.model.main.BannerData;
 import com.rigerwu.wanandroid.data.model.main.CommonUseNet;
+import com.rigerwu.wanandroid.data.model.tree.TreeData;
 
 import java.util.List;
 
@@ -37,4 +38,10 @@ public interface DbHelper {
     void deleteAllArticles();
 
     Flowable<List<ArticleData>> loadCollectedArticles();
+
+
+    void insertTreeDatas(List<TreeData> treeDataList);
+
+    Flowable<List<TreeData>> loadTreeDatas();
+
 }

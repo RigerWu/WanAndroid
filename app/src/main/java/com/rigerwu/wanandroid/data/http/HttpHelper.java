@@ -5,6 +5,7 @@ import com.rigerwu.wanandroid.data.model.main.ArticleListData;
 import com.rigerwu.wanandroid.data.model.main.BannerData;
 import com.rigerwu.wanandroid.data.model.main.CommonUseNet;
 import com.rigerwu.wanandroid.data.model.main.HotkeyData;
+import com.rigerwu.wanandroid.data.model.tree.TreeData;
 
 import java.util.List;
 
@@ -41,5 +42,13 @@ public interface HttpHelper {
      * @return list
      */
     Flowable<BaseResponse<List<HotkeyData>>> getHotkeyData();
+
+
+    /**
+     * 获取体系数据
+     *
+     * @return list
+     */
+    Flowable<BaseResponse<List<TreeData>>> getTreeData();
 
 }

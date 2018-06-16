@@ -1,4 +1,4 @@
-package com.rigerwu.wanandroid.ui.home;
+package com.rigerwu.wanandroid.ui.main.tree;
 
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
@@ -10,17 +10,16 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.rigerwu.wanandroid.BR;
 import com.rigerwu.wanandroid.R;
-import com.rigerwu.wanandroid.data.model.main.ArticleData;
-import com.sackcentury.shinebuttonlib.ShineButton;
+import com.rigerwu.wanandroid.data.model.tree.TreeData;
 
 import java.util.List;
 
 /**
- * Created by RigerWu on 2018/5/29.
+ * Created by RigerWu on 2018/6/16.
  */
-public class HomePageAdapter extends BaseQuickAdapter<ArticleData, HomePageAdapter.HomeViewHolder> {
+public class TreePageAdapter extends BaseQuickAdapter<TreeData, TreePageAdapter.TreeViewHolder> {
 
-    public HomePageAdapter(int layoutResId, @Nullable List<ArticleData> data) {
+    public TreePageAdapter(int layoutResId, @Nullable List<TreeData> data) {
         super(layoutResId, data);
     }
 
@@ -30,22 +29,22 @@ public class HomePageAdapter extends BaseQuickAdapter<ArticleData, HomePageAdapt
         if (binding == null) {
             return super.getItemView(layoutResId, parent);
         }
-        View view = binding.getRoot();
-        view.setTag(R.id.BaseQuickAdapter_databinding_support, binding);
-        return view;
+        View root = binding.getRoot();
+        root.setTag(R.id.BaseQuickAdapter_databinding_support, binding);
+        return root;
     }
 
     @Override
-    protected void convert(HomeViewHolder helper, ArticleData item) {
+    protected void convert(TreeViewHolder helper, TreeData item) {
         ViewDataBinding binding = helper.getBinding();
-        binding.setVariable(BR.article, item);
+        binding.setVariable(BR.treeData, item);
         binding.executePendingBindings();
-        ((ShineButton) helper.getView(R.id.shine_button_collect)).setChecked(item.isCollect());
 
     }
 
-    public static class HomeViewHolder extends BaseViewHolder {
-        public HomeViewHolder(View view) {
+    public static class TreeViewHolder extends BaseViewHolder {
+
+        public TreeViewHolder(View view) {
             super(view);
         }
 
@@ -53,5 +52,4 @@ public class HomePageAdapter extends BaseQuickAdapter<ArticleData, HomePageAdapt
             return (ViewDataBinding) itemView.getTag(R.id.BaseQuickAdapter_databinding_support);
         }
     }
-
 }

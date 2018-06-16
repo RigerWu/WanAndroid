@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+    >
 
     <data>
 
         <variable
             name="viewModel"
-            type="com.rigerwu.wanandroid.ui.main.home.HomePageViewModel"/>
+            type="com.rigerwu.wanandroid.ui.main.tree.TreePageViewModel"/>
     </data>
-
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
@@ -20,10 +19,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#fff"
-            app:adapter="@{viewModel.mObservableArticleList}"
             android:overScrollMode="never"/>
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-
 
 </layout>
