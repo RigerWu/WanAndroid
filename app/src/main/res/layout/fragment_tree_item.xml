@@ -5,6 +5,7 @@
 
     <data>
 
+        <import type="com.rigerwu.wanandroid.data.model.tree.TreeData"/>
         <variable
             name="treeData"
             type="com.rigerwu.wanandroid.data.model.tree.TreeData"/>
@@ -31,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="12dp"
-                android:text="开发环境"
+                android:text="@{treeData.name}"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
@@ -44,7 +45,7 @@
                 android:layout_marginEnd="24dp"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="10dp"
-                android:text="TextView"
+                android:text="@{TreeData.getChildrenString(treeData.children)}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

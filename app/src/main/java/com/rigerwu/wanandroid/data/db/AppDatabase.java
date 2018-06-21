@@ -22,7 +22,7 @@ import com.rigerwu.wanandroid.data.model.tree.TreeData;
         CommonUseNet.class,
         HotkeyData.class,
         TreeData.class
-}, version = 1, exportSchema = false)
+}, version = 2, exportSchema = false)
 @TypeConverters({RoomDataConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
 

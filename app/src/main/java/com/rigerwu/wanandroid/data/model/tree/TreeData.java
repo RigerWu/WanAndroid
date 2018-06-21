@@ -89,5 +89,12 @@ public class TreeData {
         this.children = children;
     }
 
+    public static String getChildrenString(List<TreeData> children) {
+        StringBuilder sb = new StringBuilder();
+        for (TreeData child : children) {
+            sb.append(child.getName()).append("  ");
+        }
+        return sb.toString();
+    }
 
 }

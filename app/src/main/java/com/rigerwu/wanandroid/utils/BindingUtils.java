@@ -4,7 +4,9 @@ import android.databinding.BindingAdapter;
 import android.support.v7.widget.RecyclerView;
 
 import com.rigerwu.wanandroid.data.model.main.ArticleData;
+import com.rigerwu.wanandroid.data.model.tree.TreeData;
 import com.rigerwu.wanandroid.ui.main.home.HomePageAdapter;
+import com.rigerwu.wanandroid.ui.main.tree.TreePageAdapter;
 
 import java.util.List;
 
@@ -21,6 +23,14 @@ public final class BindingUtils {
         HomePageAdapter adapter = (HomePageAdapter) recyclerView.getAdapter();
         if (adapter != null) {
             adapter.setNewData(articles);
+        }
+    }
+
+    @BindingAdapter({"adapter"})
+    public static void addTreeDatas(RecyclerView recyclerView, List<TreeData> treeDataList) {
+        TreePageAdapter adapter = (TreePageAdapter) recyclerView.getAdapter();
+        if (adapter != null) {
+            adapter.setNewData(treeDataList);
         }
     }
 }

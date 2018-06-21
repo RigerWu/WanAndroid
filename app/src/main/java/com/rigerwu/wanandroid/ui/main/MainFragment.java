@@ -10,6 +10,7 @@ import com.rigerwu.wanandroid.R;
 import com.rigerwu.wanandroid.databinding.FragmentMainBinding;
 import com.rigerwu.wanandroid.ui.base.BaseToolbarFragment;
 import com.rigerwu.wanandroid.ui.main.home.HomePageFragment;
+import com.rigerwu.wanandroid.ui.main.tree.TreePageFragment;
 import com.rigerwu.wanandroid.utils.BottomNavigationViewHelper;
 
 import javax.inject.Inject;
@@ -84,6 +85,7 @@ public class MainFragment extends BaseToolbarFragment<FragmentMainBinding, MainF
                     break;
                 case R.id.menu_tab_tree:
                     mToolbar.setTitle(R.string.tab_tree);
+                    showHideFragment(mFragments[TREE]);
                     break;
                 case R.id.menu_tab_navigation:
                     mToolbar.setTitle(R.string.tab_navigation);
@@ -101,11 +103,13 @@ public class MainFragment extends BaseToolbarFragment<FragmentMainBinding, MainF
         SupportFragment homeFragment = findChildFragment(HomePageFragment.class);
         if (homeFragment == null) {
             mFragments[HOME] = HomePageFragment.newInstance();
+            mFragments[TREE] = TreePageFragment.newInstance();
 
-            loadMultipleRootFragment(R.id.fm_tab_container, HOME, mFragments[HOME]);
+            loadMultipleRootFragment(R.id.fm_tab_container, HOME, mFragments[HOME], mFragments[TREE]);
 //            loadRootFragment(R.id.fm_tab_container, mFragments[HOME]);
         } else {
             mFragments[HOME] = homeFragment;
+            mFragments[TREE] = findChildFragment(TreePageFragment.class);
         }
 
         showHideFragment(mFragments[HOME]);

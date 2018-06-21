@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.rigerwu.wanandroid.ui.base.status.StatusViewController;
 
 import javax.annotation.Resource;
@@ -127,6 +128,7 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
     }
 
     public void changeViewStatus(int status) {
+        LogUtils.i("BaseFragment.changeViewStatus->:===========++++++++" + this.getClass().getSimpleName());
         switch (status) {
             case STATUS_NOMAL:
                 mStatusViewController.dismissStatusView();

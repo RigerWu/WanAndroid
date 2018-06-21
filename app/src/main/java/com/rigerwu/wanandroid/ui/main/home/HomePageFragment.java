@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.blankj.utilcode.util.LogUtils;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.rigerwu.wanandroid.BR;
 import com.rigerwu.wanandroid.R;
 import com.rigerwu.wanandroid.data.model.main.BannerData;
@@ -112,12 +111,9 @@ public class HomePageFragment extends BaseFragment<FragmentHomePageBinding, Home
             }
         });
 
-        mHomePageAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                String link = mHomePageAdapter.getItem(position).getLink();
-                mNavigationController.readArticleDetail(HomePageFragment.this, link);
-            }
+        mHomePageAdapter.setOnItemClickListener((adapter, view, position) -> {
+            String link = mHomePageAdapter.getItem(position).getLink();
+            mNavigationController.readArticleDetail(HomePageFragment.this, link);
         });
     }
 

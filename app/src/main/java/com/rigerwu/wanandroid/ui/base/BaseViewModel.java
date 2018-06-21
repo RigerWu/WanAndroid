@@ -3,6 +3,7 @@ package com.rigerwu.wanandroid.ui.base;
 import android.arch.lifecycle.ViewModel;
 import android.databinding.ObservableBoolean;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.rigerwu.wanandroid.data.DataManager;
 import com.rigerwu.wanandroid.utils.rx.SchedulerProvider;
 
@@ -14,11 +15,11 @@ import io.reactivex.subjects.PublishSubject;
  */
 public abstract class BaseViewModel extends ViewModel {
 
-    private DataManager mDataManager;
+    private final DataManager mDataManager;
 
     private final ObservableBoolean mIsLoading = new ObservableBoolean(false);
 
-    private final PublishSubject<Integer> mLoadingStatus = PublishSubject.create();
+    private PublishSubject<Integer> mLoadingStatus = PublishSubject.create();
 
     private final SchedulerProvider mSchedulerProvider;
 
@@ -53,6 +54,7 @@ public abstract class BaseViewModel extends ViewModel {
     }
 
     public PublishSubject<Integer> getLoadingStatus() {
+        LogUtils.i("BaseViewModel.getLoadingStatus->:" + this.getClass().getSimpleName());
         return mLoadingStatus;
     }
 
