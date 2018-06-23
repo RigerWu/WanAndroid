@@ -3,19 +3,19 @@ package com.rigerwu.wanandroid.ui.main.tree;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.blankj.utilcode.util.LogUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.rigerwu.wanandroid.BR;
 import com.rigerwu.wanandroid.R;
+import com.rigerwu.wanandroid.data.model.tree.TreeData;
 import com.rigerwu.wanandroid.databinding.FragmentTreePageBinding;
 import com.rigerwu.wanandroid.ui.base.BaseFragment;
 import com.rigerwu.wanandroid.ui.navigation.NavigationController;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import javax.inject.Inject;
 
@@ -75,10 +75,13 @@ public class TreePageFragment extends BaseFragment<FragmentTreePageBinding, Tree
             mViewModel.setObservableTreeDataList(treeData);
         });
 
-        mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+        mRefreshLayout.setOnRefreshListener(refreshLayout -> mViewModel.refresh());
+
+        mTreePageAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                mViewModel.refresh();
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                TreeData item = mTreePageAdapter.getItem(position);
+
             }
         });
     }
@@ -89,7 +92,7 @@ public class TreePageFragment extends BaseFragment<FragmentTreePageBinding, Tree
         mBinding = getViewDataBinding();
         mRefreshLayout = mBinding.refreshLayout;
         mRecyclerView = mBinding.recyclerView;
-        mRefreshLayout.setNoMoreData(true);
+        mRefreshLayout.setEnableLoadMore(false);
 
         mTreePageAdapter = new TreePageAdapter(R.layout.fragment_tree_item, null);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(_mActivity));

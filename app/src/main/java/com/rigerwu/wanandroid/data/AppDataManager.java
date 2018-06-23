@@ -82,7 +82,7 @@ public class AppDataManager implements DataManager {
     public Flowable<BaseResponse<List<TreeData>>> getTreeData() {
         return mHttpHelper.getTreeData().doOnNext(listBaseResponse -> {
             if (listBaseResponse.isSuccess()) {
-
+                insertTreeDatas(listBaseResponse.getData());
             }
         });
     }

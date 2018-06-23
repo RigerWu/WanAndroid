@@ -40,12 +40,12 @@ import com.rigerwu.wanandroid.R;
 
 import java.util.HashMap;
 
-import me.yokeyword.fragmentation.SupportFragment;
+import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
 
 /**
  * Created by RigerWu on 2018/6/13.
  */
-public class ArticleDetailFragment extends SupportFragment implements FragmentKeyDown {
+public class ArticleDetailFragment extends SwipeBackFragment implements FragmentKeyDown {
     private ImageView mBackImageView;
     private View mLineView;
     private ImageView mFinishImageView;
@@ -76,17 +76,18 @@ public class ArticleDetailFragment extends SupportFragment implements FragmentKe
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_webview, container, false);
+        View view = inflater.inflate(R.layout.fragment_webview, container, false);
+        return attachToSwipeBack(view);
     }
 
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-
+        setParallaxOffset(0.5f);
+        View webViewRoot = view.findViewById(R.id.webview_root);
         mAgentWeb = AgentWeb.with(this)//
-                .setAgentWebParent((LinearLayout) view, -1, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))//传入AgentWeb的父控件。
+                .setAgentWebParent((LinearLayout) webViewRoot, -1, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))//传入AgentWeb的父控件。
                 .useDefaultIndicator(-1, 3)//设置进度条颜色与高度，-1为默认值，高度为2，单位为dp。
                 .setAgentWebWebSettings(getSettings())//设置 IAgentWebSettings。
                 .setWebViewClient(mWebViewClient)//WebViewClient ， 与 WebView 使用一致 ，但是请勿获取WebView调用setWebViewClient(xx)方法了,会覆盖AgentWeb DefaultWebClient,同时相应的中间件也会失效。
@@ -401,8 +402,8 @@ public class ArticleDetailFragment extends SupportFragment implements FragmentKe
                 case R.id.default_clean:
                     toCleanWebCache();
                     return true;
-                case R.id.error_website:
-                    loadErrorWebSite();
+//                case R.id.error_website:
+//                    loadErrorWebSite();
                     // test DownloadingService
 //			        LogUtils.i(TAG, " :" + mDownloadingService + "  " + (mDownloadingService == null ? "" : mDownloadingService.isShutdown()) + "  :" + mExtraService);
 //                    if (mDownloadingService != null && !mDownloadingService.isShutdown()) {
@@ -414,7 +415,7 @@ public class ArticleDetailFragment extends SupportFragment implements FragmentKe
 //                        mExtraService.performReDownload();
 //                    }
 
-                    return true;
+//                    return true;
                 default:
                     return false;
             }
