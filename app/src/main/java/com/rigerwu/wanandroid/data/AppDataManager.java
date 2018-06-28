@@ -88,6 +88,11 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
+    public Flowable<BaseResponse<ArticleListData>> getTreeArticleList(int pageNum, int cid) {
+        return mHttpHelper.getTreeArticleList(pageNum, cid);
+    }
+
+    @Override
     public void setLoginAccount(String account) {
         mPreferencesHelper.setLoginAccount(account);
     }
@@ -160,6 +165,11 @@ public class AppDataManager implements DataManager {
     @Override
     public Flowable<List<ArticleData>> loadAllArticles() {
         return mDbHelper.loadAllArticles();
+    }
+
+    @Override
+    public Flowable<List<ArticleData>> loadTreeArticle(int cid) {
+        return mDbHelper.loadTreeArticle(cid);
     }
 
     @Override

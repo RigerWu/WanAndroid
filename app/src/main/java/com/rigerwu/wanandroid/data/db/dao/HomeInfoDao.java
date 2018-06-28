@@ -44,6 +44,6 @@ public interface HomeInfoDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertTreeDatas(List<TreeData> treeDataList);
 
-    @Query("select * from tree_data")
+    @Query("select * from tree_data order by `order`")
     Flowable<List<TreeData>> loadTreeDatas();
 }

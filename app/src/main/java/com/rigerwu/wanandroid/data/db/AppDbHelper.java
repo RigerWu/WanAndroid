@@ -69,6 +69,11 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
+    public Flowable<List<ArticleData>> loadTreeArticle(int cid) {
+        return mDatabase.getArticleDao().loadTreeArticle(cid);
+    }
+
+    @Override
     public void deleteArticle(ArticleData... articleData) {
         mDatabase.getArticleDao().deleteArticle(articleData);
     }

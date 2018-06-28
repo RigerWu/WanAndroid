@@ -12,6 +12,7 @@ import java.util.List;
 import io.reactivex.Flowable;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 
 /**
@@ -36,4 +37,7 @@ public interface WanAndroidApi {
 
     @GET("tree/json")
     Flowable<BaseResponse<List<TreeData>>> getTreeData();
+
+    @GET("article/list/{num}/json")
+    Flowable<BaseResponse<ArticleListData>> getTreeArticleList(@Path("num") int pageNum, @Query("cid") int cid);
 }

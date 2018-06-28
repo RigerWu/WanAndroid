@@ -63,6 +63,7 @@ dependencies {
     implementation rootProject.ext.dependencies["SmartRefreshHeader"]
     implementation rootProject.ext.dependencies["shinebutton"]
     implementation rootProject.ext.dependencies["banner"]
+    implementation rootProject.ext.dependencies["FlycoTabLayout"]
     //rx
     implementation rootProject.ext.dependencies["rxjava"]
     implementation rootProject.ext.dependencies["rxandroid"]

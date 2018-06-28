@@ -7,11 +7,11 @@ import android.view.View;
 import com.rigerwu.wanandroid.R;
 
 /**
- * Fragment with main_toolbar that can be swiped back
+ * Fragment with main_toolbar but can't swipe back
  * Created by RigerWu on 2018/5/26.
  */
-public abstract class BaseToolbarFragment<T extends ViewDataBinding, V extends BaseViewModel>
-        extends BaseSwipeBackFragment<T, V> {
+public abstract class BaseRootToolbarFragment<T extends ViewDataBinding, V extends BaseViewModel>
+        extends BaseFragment<T, V> {
 
     protected Toolbar mToolbar;
 

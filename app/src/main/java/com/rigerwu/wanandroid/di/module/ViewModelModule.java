@@ -5,7 +5,9 @@ import android.arch.lifecycle.ViewModelProvider;
 
 import com.rigerwu.wanandroid.ui.main.MainFragmentViewModel;
 import com.rigerwu.wanandroid.ui.main.home.HomePageViewModel;
+import com.rigerwu.wanandroid.ui.main.tree.TreePageDetailViewModel;
 import com.rigerwu.wanandroid.ui.main.tree.TreePageViewModel;
+import com.rigerwu.wanandroid.ui.main.tree.treearticle.TreeArticleListViewModel;
 import com.rigerwu.wanandroid.ui.splash.SplashViewModel;
 
 import dagger.Binds;
@@ -40,4 +42,14 @@ public abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(TreePageViewModel.class)
     abstract ViewModel bindTreePageFragmentViewModel(TreePageViewModel treePageViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(TreePageDetailViewModel.class)
+    abstract ViewModel bindTreePageDetailFragmentViewModel(TreePageDetailViewModel treePageDetailViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(TreeArticleListViewModel.class)
+    abstract ViewModel bindTreeArticleListFragmentViewModel(TreeArticleListViewModel treeArticleListViewModel);
 }

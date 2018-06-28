@@ -27,6 +27,9 @@ public interface ArticleDao {
     @Query("select * from article_data order by id desc")
     Flowable<List<ArticleData>> loadAllArticles();
 
+    @Query("select * from article_data where chapter_id = (:cid)")
+    Flowable<List<ArticleData>> loadTreeArticle(int cid);
+
     @Delete
     void deleteArticle(ArticleData... articleData);
 

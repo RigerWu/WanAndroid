@@ -4,6 +4,7 @@ import android.arch.lifecycle.MutableLiveData;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableList;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.rigerwu.wanandroid.data.DataManager;
 import com.rigerwu.wanandroid.data.model.tree.TreeData;
 import com.rigerwu.wanandroid.ui.base.BaseFragment;
@@ -38,12 +39,14 @@ public class TreePageViewModel extends BaseViewModel {
 
         getCompositeDisposable().add(getDataManager()
                 .loadTreeDatas()
+                .take(1)
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(treeData -> {
                     if (treeData == null || treeData.size() == 0) {
                         fetchTreeData();
                     } else {
+                        LogUtils.i("TreePageViewModel.initData->:数据库设置");
                         mTreeListLiveData.setValue(treeData);
                     }
                 }));
@@ -57,6 +60,7 @@ public class TreePageViewModel extends BaseViewModel {
                 .subscribe(listBaseResponse -> {
                     if (listBaseResponse != null && listBaseResponse.isSuccess()) {
                         List<TreeData> data = listBaseResponse.getData();
+                        LogUtils.i("TreePageViewModel.fetchTreeData->:网络设置");
                         mTreeListLiveData.setValue(data);
                         getLoadingStatus().onNext(BaseFragment.STATUS_NOMAL);
                     } else {

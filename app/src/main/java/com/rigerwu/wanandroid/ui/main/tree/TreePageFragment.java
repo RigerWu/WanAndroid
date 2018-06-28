@@ -5,10 +5,8 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import com.blankj.utilcode.util.LogUtils;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.rigerwu.wanandroid.BR;
 import com.rigerwu.wanandroid.R;
 import com.rigerwu.wanandroid.data.model.tree.TreeData;
@@ -18,6 +16,8 @@ import com.rigerwu.wanandroid.ui.navigation.NavigationController;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import javax.inject.Inject;
+
+import me.yokeyword.fragmentation.SupportFragment;
 
 /**
  * Created by RigerWu on 2018/6/16.
@@ -77,18 +77,14 @@ public class TreePageFragment extends BaseFragment<FragmentTreePageBinding, Tree
 
         mRefreshLayout.setOnRefreshListener(refreshLayout -> mViewModel.refresh());
 
-        mTreePageAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                TreeData item = mTreePageAdapter.getItem(position);
-
-            }
+        mTreePageAdapter.setOnItemClickListener((adapter, view, position) -> {
+            TreeData item = mTreePageAdapter.getItem(position);
+            mNavigationController.openTreeDetail((SupportFragment) getParentFragment(), item);
         });
     }
 
     @Override
     protected void setUp() {
-        mBinding = getViewDataBinding();
         mBinding = getViewDataBinding();
         mRefreshLayout = mBinding.refreshLayout;
         mRecyclerView = mBinding.recyclerView;

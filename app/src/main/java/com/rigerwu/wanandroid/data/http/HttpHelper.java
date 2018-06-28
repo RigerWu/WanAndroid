@@ -51,4 +51,13 @@ public interface HttpHelper {
      */
     Flowable<BaseResponse<List<TreeData>>> getTreeData();
 
+    /**
+     * 获取体系下文章列表
+     *
+     * @param pageNum 页码
+     * @param cid     cid
+     * @return
+     */
+    Flowable<BaseResponse<ArticleListData>> getTreeArticleList(int pageNum, int cid);
+
 }

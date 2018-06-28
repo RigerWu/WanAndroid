@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.rigerwu.wanandroid.data.model.tree.TreeData;
 import com.rigerwu.wanandroid.ui.main.MainActivity;
+import com.rigerwu.wanandroid.ui.main.tree.TreePageDetailFragment;
 import com.rigerwu.wanandroid.ui.webview.ArticleDetailFragment;
 
 import javax.inject.Inject;
@@ -30,11 +31,11 @@ public class NavigationController {
     public void readArticleDetail(SupportFragment fromFragment, String articleUrl) {
         Bundle bundle = new Bundle();
         bundle.putString(ArticleDetailFragment.URL_KEY, articleUrl);
-        ((SupportFragment) fromFragment.getParentFragment()).start(ArticleDetailFragment.getInstance(bundle));
+        fromFragment.start(ArticleDetailFragment.getInstance(bundle));
     }
 
     public void openTreeDetail(SupportFragment fromFragment, TreeData treeData) {
-
+        fromFragment.start(TreePageDetailFragment.newInstance(treeData));
     }
 
 }

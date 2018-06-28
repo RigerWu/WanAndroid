@@ -33,6 +33,8 @@ public interface DbHelper {
 
     Flowable<List<ArticleData>> loadAllArticles();
 
+    Flowable<List<ArticleData>> loadTreeArticle(int cid);
+
     void deleteArticle(ArticleData... articleData);
 
     void deleteAllArticles();

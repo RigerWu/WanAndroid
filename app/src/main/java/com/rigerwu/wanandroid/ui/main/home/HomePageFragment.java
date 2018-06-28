@@ -31,6 +31,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import me.yokeyword.fragmentation.SupportFragment;
+
 /**
  * Created by RigerWu on 2018/5/27.
  */
@@ -113,7 +115,8 @@ public class HomePageFragment extends BaseFragment<FragmentHomePageBinding, Home
 
         mHomePageAdapter.setOnItemClickListener((adapter, view, position) -> {
             String link = mHomePageAdapter.getItem(position).getLink();
-            mNavigationController.readArticleDetail(HomePageFragment.this, link);
+            // the article fragment is the same level as mainfragment
+            mNavigationController.readArticleDetail((SupportFragment) getParentFragment(), link);
         });
     }
 

@@ -52,4 +52,9 @@ public class AppHttpHelper implements HttpHelper{
     public Flowable<BaseResponse<List<TreeData>>> getTreeData() {
         return mWanAndroidApi.getTreeData();
     }
+
+    @Override
+    public Flowable<BaseResponse<ArticleListData>> getTreeArticleList(int pageNum, int cid) {
+        return mWanAndroidApi.getTreeArticleList(pageNum, cid);
+    }
 }
